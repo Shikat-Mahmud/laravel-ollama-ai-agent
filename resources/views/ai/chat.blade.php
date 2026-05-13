@@ -185,7 +185,7 @@
                             </h1>
 
                             <p class="text-sm text-slate-400">
-                                Ask anything to your AI
+                                Developed by Saikat Mahmud
                             </p>
                         </div>
                     </div>
@@ -216,7 +216,7 @@
                             </div>
 
                             <div class="text-xs text-slate-500 mt-2">
-                                AI Assistant • Just now
+                                <span id="initialTimestamp">AI Assistant • Just now</span>
                             </div>
                         </div>
                     </div>
@@ -327,6 +327,24 @@
                 input.style.height = input.scrollHeight + 'px';
             });
 
+            // TIMESTAMP HELPERS
+            function getFormattedTime(date) {
+                return date.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            function getTimestampLabel(label) {
+                return `${label} • ${getFormattedTime(new Date())}`;
+            }
+
+            const initialTimestamp = document.getElementById('initialTimestamp');
+
+            if (initialTimestamp) {
+                initialTimestamp.textContent = getTimestampLabel('AI Assistant');
+            }
+
             // ENTER SEND
             input.addEventListener('keydown', function(e) {
 
@@ -400,7 +418,7 @@
                     </div>
 
                     <div class="text-xs text-slate-500 mt-2 text-right">
-                        You • Just now
+                        ${getTimestampLabel('You')}
                     </div>
                 </div>
             </div>
@@ -436,7 +454,7 @@
                 </div>
 
                 <div class="text-xs text-slate-500 mt-2">
-                    AI Assistant • Just now
+                    ${getTimestampLabel('AI Assistant')}
                 </div>
             </div>
         </div>
