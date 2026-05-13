@@ -74,13 +74,13 @@
 
 <body class="bg-slate-950 text-white">
 
-    <div class="h-screen w-full bg-gradient-to-br from-slate-950 via-slate-900 to-black">
+    <div class="h-screen w-full bg-linear-to-br from-slate-950 via-slate-900 to-black">
 
         <div class="flex h-full overflow-hidden">
 
             {{-- SIDEBAR --}}
             <aside id="sidebar"
-                class="fixed lg:relative z-50 left-0 top-0 h-full w-[300px] bg-white/5 backdrop-blur-xl border-r border-white/10 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
+                class="fixed lg:relative z-50 left-0 top-0 h-full w-75 bg-white/5 backdrop-blur-xl border-r border-white/10 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
 
                 {{-- LOGO --}}
                 <div class="p-5 border-b border-white/10 flex items-center justify-between">
@@ -128,7 +128,7 @@
 
                     @for ($i = 1; $i <= 10; $i++)
                         <button
-                            class="w-full text-left p-4 rounded-2xl bg-white/[0.03] hover:bg-white/10 transition border border-transparent hover:border-white/10">
+                            class="w-full text-left p-4 rounded-2xl bg-white/3 hover:bg-white/10 transition border border-transparent hover:border-white/10">
                             <h3 class="font-medium truncate">
                                 Laravel AI Chat {{ $i }}
                             </h3>
@@ -170,7 +170,7 @@
 
                 {{-- TOP BAR --}}
                 <header
-                    class="border-b border-white/10 bg-white/[0.03] backdrop-blur-xl px-4 md:px-6 py-4 flex items-center justify-between">
+                    class="border-b border-white/10 bg-white/3 backdrop-blur-xl px-4 md:px-6 py-4 flex items-center justify-between">
 
                     <div class="flex items-center gap-4">
 
@@ -189,19 +189,6 @@
                             </p>
                         </div>
                     </div>
-
-                    <div class="hidden md:flex items-center gap-3">
-
-                        <button
-                            class="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
-                            GPT-4.1
-                        </button>
-
-                        <button
-                            class="w-11 h-11 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition flex items-center justify-center">
-                            ⚡
-                        </button>
-                    </div>
                 </header>
 
                 {{-- CHAT AREA --}}
@@ -217,7 +204,7 @@
 
                         <div class="max-w-3xl">
 
-                            <div class="bg-white/[0.04] border border-white/10 rounded-3xl rounded-tl-sm px-5 py-4">
+                            <div class="bg-white/4 border border-white/10 rounded-3xl rounded-tl-sm px-5 py-4">
 
                                 <p class="leading-8 text-slate-200">
                                     Hello 👋 <br><br>
@@ -236,32 +223,6 @@
 
                 </div>
 
-                {{-- SUGGESTIONS --}}
-                <div class="px-4 md:px-8 pb-4">
-
-                    <div class="flex gap-3 overflow-x-auto no-scrollbar">
-
-                        @php
-                            $suggestions = [
-                                'Create Laravel auth system',
-                                'Build REST API',
-                                'Design admin dashboard',
-                                'Write marketing email',
-                                'Optimize MySQL query',
-                                'Generate SEO content',
-                            ];
-                        @endphp
-
-                        @foreach ($suggestions as $suggestion)
-                            <button
-                                class="suggestionBtn whitespace-nowrap px-4 py-3 rounded-2xl bg-white/[0.04] border border-white/10 hover:bg-white/10 transition text-sm">
-                                {{ $suggestion }}
-                            </button>
-                        @endforeach
-
-                    </div>
-                </div>
-
                 {{-- INPUT --}}
                 <div class="border-t border-white/10 bg-black/20 backdrop-blur-xl p-4 md:p-6">
 
@@ -272,7 +233,7 @@
                         <div class="relative">
 
                             <textarea id="messageInput" rows="1" placeholder="Message AI assistant..."
-                                class="w-full resize-none overflow-hidden bg-white/[0.04] border border-white/10 rounded-3xl px-6 py-5 pr-36 text-white placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                                class="w-full resize-none overflow-hidden bg-white/4 border border-white/10 rounded-3xl px-6 py-5 pr-36 text-white placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
 
                             <div class="absolute right-4 bottom-4 flex items-center gap-2">
 
@@ -313,7 +274,7 @@
                 AI
             </div>
 
-            <div class="bg-white/[0.04] border border-white/10 rounded-3xl rounded-tl-sm px-5 py-5">
+            <div class="bg-white/4 border border-white/10 rounded-3xl rounded-tl-sm px-5 py-5">
 
                 <div class="flex items-center gap-2">
 
@@ -466,7 +427,7 @@
 
             <div class="max-w-3xl">
 
-                <div class="bg-white/[0.04] border border-white/10 rounded-3xl rounded-tl-sm px-5 py-4">
+                <div class="bg-white/4 border border-white/10 rounded-3xl rounded-tl-sm px-5 py-4">
 
                     <div class="leading-8 text-slate-200 prose prose-invert max-w-none">
                         ${cleanHtml}
