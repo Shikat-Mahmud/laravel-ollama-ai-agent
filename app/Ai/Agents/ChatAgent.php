@@ -20,10 +20,10 @@ use Stringable;
 // #[Model('samuser3/granite3.2-gemma3:latest')]
 
 // api key
-// #[Model('gpt-oss:120b-cloud')]
+// #[Model('gpt-oss:120b-cloud')] // non vision, current data
 // #[Model('gpt-oss:20b-cloud')]
 // #[Model('qwen3-vl:235b')] // slower
-#[Model('qwen3-vl:235b-instruct')]
+#[Model('qwen3-vl:235b-instruct')] // vision, older data
 
 // #[Model('qwen2.5-vl')]
 // #[Model('llava')]
