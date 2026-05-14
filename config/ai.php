@@ -114,8 +114,9 @@ return [
 
         'ollama' => [
             'driver' => 'ollama',
-            'key' => env('OLLAMA_API_KEY', ''),
+            'key' => env('OLLAMA_API_KEY', '1df04566d7fc406e9659c9d3090e2c88.kuVqgG4INFz2Q-z89daOo__G'),
             'url' => env('OLLAMA_URL', 'http://localhost:11434'),
+            'timeout' => 300,
         ],
 
         'openai' => [

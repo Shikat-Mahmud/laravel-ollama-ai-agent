@@ -11,10 +11,25 @@ use Laravel\Ai\Contracts\Tool;
 use Laravel\Ai\Enums\Lab;
 use Laravel\Ai\Messages\Message;
 use Laravel\Ai\Promptable;
+use Laravel\Ai\Providers\Tools\WebSearch;
 use Stringable;
 
 #[Provider(Lab::Ollama)]
-#[Model('samuser3/granite3.2-gemma3:latest')]
+
+// local
+// #[Model('samuser3/granite3.2-gemma3:latest')]
+
+// api key
+// #[Model('gpt-oss:120b-cloud')]
+// #[Model('gpt-oss:20b-cloud')]
+// #[Model('qwen3-vl:235b')] // slower
+#[Model('qwen3-vl:235b-instruct')]
+
+// #[Model('qwen2.5-vl')]
+// #[Model('llava')]
+// #[Model('gemma3')]
+// #[Model('minicpm-v')]
+
 
 class ChatAgent implements Agent, Conversational, HasTools
 {

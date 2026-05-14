@@ -232,12 +232,18 @@
 
                         <div class="relative">
 
+                            <div id="filePreview"
+                                class="hidden flex flex-wrap gap-2 p-2 bg-white/5 border-t border-x border-white/10 rounded-t-3xl">
+                            </div>
+
                             <textarea id="messageInput" rows="1" placeholder="Message AI assistant..."
                                 class="w-full resize-none overflow-hidden bg-white/4 border border-white/10 rounded-3xl px-6 py-5 pr-36 text-white placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
 
+                            <input type="file" id="fileInput" name="attachments[]" multiple class="hidden">
+
                             <div class="absolute right-4 bottom-4 flex items-center gap-2">
 
-                                <button type="button"
+                                <button type="button" id="attachBtn"
                                     class="w-11 h-11 rounded-2xl hover:bg-white/10 transition flex items-center justify-center">
                                     📎
                                 </button>
@@ -299,6 +305,9 @@
 
             const form = document.getElementById('chatForm');
             const input = document.getElementById('messageInput');
+            const fileInput = document.getElementById('fileInput');
+            const attachBtn = document.getElementById('attachBtn');
+            const filePreview = document.getElementById('filePreview');
             const chatContainer = document.getElementById('chatContainer');
 
             const sidebar = document.getElementById('sidebar');
@@ -320,6 +329,25 @@
                 sidebar.classList.add('-translate-x-full');
                 overlay.classList.add('hidden');
             }
+
+            // ATTACHMENT
+            attachBtn.addEventListener('click', () => fileInput.click());
+
+            fileInput.addEventListener('change', () => {
+                filePreview.innerHTML = '';
+                if (fileInput.files.length > 0) {
+                    filePreview.classList.remove('hidden');
+                    Array.from(fileInput.files).forEach(file => {
+                        const chip = document.createElement('div');
+                        chip.className =
+                            'bg-indigo-600/20 text-indigo-400 px-3 py-1 rounded-full text-xs flex items-center gap-2';
+                        chip.innerHTML = `<span>${file.name}</span>`;
+                        filePreview.appendChild(chip);
+                    });
+                } else {
+                    filePreview.classList.add('hidden');
+                }
+            });
 
             // AUTO HEIGHT
             input.addEventListener('input', () => {
@@ -370,24 +398,31 @@
 
                 const message = input.value.trim();
 
-                if (!message) return;
+                if (!message && fileInput.files.length === 0) return;
 
                 appendUserMessage(message);
 
+                const formData = new FormData(form);
+                formData.set('message', message);
+
                 input.value = '';
                 input.style.height = 'auto';
+                fileInput.value = '';
+                filePreview.innerHTML = '';
+                filePreview.classList.add('hidden');
 
                 const typing = appendTyping();
 
                 try {
-                    const response = await fetch(
-                        `{{ route('ai.chat-stream') }}?message=${encodeURIComponent(message)}`, {
-                            method: 'GET',
-                            headers: {
-                                'Accept': 'application/json'
-                            }
+                    const response = await fetch("{{ route('ai.chat-stream') }}", {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content')
                         }
-                    );
+                    });
 
                     const data = await response.json();
 
@@ -407,16 +442,12 @@
 
             // USER MESSAGE
             function appendUserMessage(message) {
-
-                const html = `
+                let html = `
             <div class="flex justify-end">
-
                 <div class="max-w-3xl">
-
                     <div class="bg-indigo-600 rounded-3xl rounded-br-sm px-5 py-4">
                         <p class="leading-8 whitespace-pre-wrap">${escapeHtml(message)}</p>
                     </div>
-
                     <div class="text-xs text-slate-500 mt-2 text-right">
                         ${getTimestampLabel('You')}
                     </div>
@@ -425,7 +456,6 @@
         `;
 
                 chatContainer.insertAdjacentHTML('beforeend', html);
-
                 scrollBottom();
             }
 
